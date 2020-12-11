@@ -28,15 +28,12 @@ if [[ ! -f $input_file ]]; then
     --compressed > $input_file
 fi
 
-touch "$directory/sample.txt"
-
 problem_file="$directory/problem.rb"
 if [[ ! -f $problem_file ]]; then
   cat > $problem_file <<-EOF
 #! /usr/bin/env ruby
 
-f = File.open('./sample.txt')
-# f = File.open('./input.txt')
+f = File.open('./input.txt')
 
 def part1()
 end
