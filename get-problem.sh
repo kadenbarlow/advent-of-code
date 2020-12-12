@@ -1,18 +1,18 @@
 #! /usr/bin/env bash
 
-if [[ -z "$1" ]]; then
-  echo "usage: ./get-problem.sh <day-number>"
-  echo "e.g. ./get-problem.sh 7"
+if [[ -z "$1" ]] || [[ -z "$2" ]]; then
+  echo "usage: ./get-problem.sh <year> <day>"
+  echo "e.g. ./get-problem.sh 2020 7"
   exit 1
 fi
 
-directory="day$1"
+directory="$1/day$2"
 mkdir -p $directory
 
 input_file="$directory/input.txt"
 if [[ ! -f $input_file ]]; then
   touch $input_file
-  curl "https://adventofcode.com/2020/day/$1/input" \
+  curl "https://adventofcode.com/$1/day/$2/input" \
     -H 'authority: adventofcode.com' \
     -H 'cache-control: max-age=0' \
     -H 'upgrade-insecure-requests: 1' \
@@ -31,13 +31,23 @@ fi
 problem_file="$directory/problem.rb"
 if [[ ! -f $problem_file ]]; then
   cat > $problem_file <<-EOF
-#! /usr/bin/env ruby
+require 'byebug'
+class Solution < AbstractSolution
+  def initialize
+    @part1_test_input <<~TXT
+    TXT
+    @part2_test_answer = nil
 
-f = File.open('./input.txt')
+    @part2_test_input <<~TXT
+    TXT
+    @part2_test_answer = nil
+  end
 
-def part1()
+  def part1(input)
+  end
+
+  def part2(input)
+  end
 end
-
-puts part1()
 EOF
 fi

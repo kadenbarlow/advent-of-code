@@ -1,79 +1,87 @@
 #! /usr/bin/env ruby
 
 require 'byebug'
-f = File.open('./input.txt')
-instructions = f.read.split("\n")
+class Solution < AbstractSolution
+  DIRECTIONS = %w[N E S W].freeze
 
-sample = <<~TXT
-F10
-N3
-F7
-R90
-F11
-TXT
-# instructions = sample.split("\n")
+  def initialize
+    @part1_test_input = <<~TXT
+      F10
+      N3
+      F7
+      R90
+      F11
+    TXT
+    @part1_test_answer = 25
 
-DIRECTIONS = %w[N E S W].freeze
-
-def move_direction(point, direction, spaces)
-  point[0] += spaces if direction == 'E'
-  point[0] -= spaces if direction == 'W'
-  point[1] += spaces if direction == 'N'
-  point[1] -= spaces if direction == 'S'
-  return point
-end
-
-def part1(instructions)
-  ship = [0, 0]
-  current_direction = 'E'
-  instructions.each do |instruction|
-    direction = instruction.chars[0]
-    spaces = instruction[1..].to_i
-
-    if DIRECTIONS.include?(direction)
-      ship = move_direction(ship, direction, spaces)
-    elsif direction == 'F'
-      ship = move_direction(ship, current_direction, spaces)
-    elsif direction == 'R'
-      new_index = (DIRECTIONS.index(current_direction) + (spaces / 90)) % 4
-      current_direction = DIRECTIONS[new_index]
-    elsif direction == 'L'
-      new_index = (DIRECTIONS.index(current_direction) - (spaces / 90)) % 4
-      current_direction = DIRECTIONS[new_index]
-    end
+    @part2_test_input = <<~TXT
+      F10
+      N3
+      F7
+      R90
+      F11
+    TXT
+    @part2_test_answer = 286
   end
-  return ship[0].abs + ship[1].abs
-end
 
-puts part1(instructions)
+  def move_direction(point, direction, spaces)
+    point[0] += spaces if direction == 'E'
+    point[0] -= spaces if direction == 'W'
+    point[1] += spaces if direction == 'N'
+    point[1] -= spaces if direction == 'S'
+    return point
+  end
 
-def part2(instructions)
-  ship = [0, 0]
-  waypoint = [10, 1]
+  def part1(input)
+    instructions = input.split("\n")
+    ship = [0, 0]
+    current_direction = 'E'
+    instructions.each do |instruction|
+      direction = instruction.chars[0]
+      spaces = instruction[1..].to_i
 
-  instructions.each do |instruction|
-    direction = instruction.chars[0]
-    spaces = instruction[1..].to_i
-
-    if DIRECTIONS.include?(direction)
-      waypoint = move_direction(waypoint, direction, spaces)
-    elsif direction == 'F'
-      spaces.times do
-        ship[0] += waypoint[0]
-        ship[1] += waypoint[1]
+      if DIRECTIONS.include?(direction)
+        ship = move_direction(ship, direction, spaces)
+      elsif direction == 'F'
+        ship = move_direction(ship, current_direction, spaces)
+      elsif direction == 'R'
+        new_index = (DIRECTIONS.index(current_direction) + (spaces / 90)) % 4
+        current_direction = DIRECTIONS[new_index]
+      elsif direction == 'L'
+        new_index = (DIRECTIONS.index(current_direction) - (spaces / 90)) % 4
+        current_direction = DIRECTIONS[new_index]
       end
-    elsif direction == 'R'
-      rotations = spaces / 90
-      rotations.times { waypoint = [waypoint[1], 0 - waypoint[0]] }
-    elsif direction == 'L'
-      rotations = spaces / 90
-      rotations.times { waypoint = [0 - waypoint[1], waypoint[0]] }
     end
+    return ship[0].abs + ship[1].abs
   end
-  return ship[0].abs + ship[1].abs
-end
 
-puts part2(instructions)
+  def part2(input)
+    instructions = input.split("\n")
+    ship = [0, 0]
+    waypoint = [10, 1]
+
+    instructions.each do |instruction|
+      direction = instruction.chars[0]
+      spaces = instruction[1..].to_i
+
+      if DIRECTIONS.include?(direction)
+        waypoint = move_direction(waypoint, direction, spaces)
+      elsif direction == 'F'
+        spaces.times do
+          ship[0] += waypoint[0]
+          ship[1] += waypoint[1]
+        end
+      elsif direction == 'R'
+        rotations = spaces / 90
+        rotations.times { waypoint = [waypoint[1], 0 - waypoint[0]] }
+      elsif direction == 'L'
+        rotations = spaces / 90
+        rotations.times { waypoint = [0 - waypoint[1], waypoint[0]] }
+      end
+    end
+    return ship[0].abs + ship[1].abs
+  end
+end
 
 # -- Day 12: Rain Risk ---
 # Your ferry made decent progress toward the island, but the storm came in faster than anyone expected. The ferry needs to take evasive actions!
