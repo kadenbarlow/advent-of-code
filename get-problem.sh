@@ -36,7 +36,7 @@ class Solution < AbstractSolution
   def initialize
     @part1_test_input <<~TXT
     TXT
-    @part2_test_answer = nil
+    @part1_test_answer = nil
 
     @part2_test_input <<~TXT
     TXT
