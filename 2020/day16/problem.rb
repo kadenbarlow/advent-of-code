@@ -82,7 +82,7 @@ class Solution < AbstractSolution
       counts = Hash.new { |hash, key| hash[key] = Array.new }
       possible_fields.each { |key, value| counts[value.length] << key }
 
-      known_position = counts[counts.keys.sort.first].first
+      known_position = counts[counts.keys.min].first
       known_field = possible_fields[known_position]
       positions[known_position] = known_field[0]
       possible_fields.delete(known_position)
