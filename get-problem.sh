@@ -34,11 +34,11 @@ if [[ ! -f $problem_file ]]; then
 require 'byebug'
 class Solution < AbstractSolution
   def initialize
-    @part1_test_input <<~TXT
+    @part1_test_input = <<~TXT
     TXT
     @part1_test_answer = nil
 
-    @part2_test_input <<~TXT
+    @part2_test_input = <<~TXT
     TXT
     @part2_test_answer = nil
   end
