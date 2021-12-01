@@ -1,4 +1,7 @@
 require 'byebug'
+require "uri"
+require "net/http"
+
 class String
   def black;          "\e[30m#{self}\e[0m" end
   def red;            "\e[31m#{self}\e[0m" end
@@ -26,7 +29,7 @@ class String
 end
 
 class AbstractSolution
-  def solve(input, skip_test_cases: false)
+  def solve(input, skip_test_cases: false, year:, day:)
     unless skip_test_cases
       pass = true
       pass &= test(@part1_test_input, @part1_test_answer, method(:part1), 1) unless @part1_test_answer.nil?
@@ -40,8 +43,29 @@ class AbstractSolution
     end
 
     puts "\n" unless skip_test_cases
-    run(input, method(:part1), 1)
-    run(input, method(:part2), 2)
+    part1 = run(input, method(:part1), 1)
+    part2 = run(input, method(:part2), 2)
+
+    print "Submit Answer? [Y/N] "
+    submit = STDIN.gets.chomp
+    if submit.downcase == 'y'
+      answer = @part2_test_answer.nil? ? part1 : part2
+
+      url = URI("https://adventofcode.com/#{year}/day/#{day}/answer")
+      https = Net::HTTP.new(url.host, url.port)
+      https.use_ssl = true
+      request = Net::HTTP::Post.new(url)
+      request["Cookie"] = "session=#{ENV['SESSION_COOKIE']};"
+      form_data = [['level', (answer == part1 ? '1' : '2')],['answer', answer]]
+      request.set_form form_data, 'multipart/form-data'
+      response = https.request(request)
+
+      if response.read_body.include?("not the right answer")
+        puts "#{answer.to_s.magenta.bold} was #{'incorrect!'.red}\n\n"
+      else
+        puts "#{answer.to_s.magenta.bold} was #{'correct!'.green}\n\n"
+      end
+    end
   end
 
   def run(input, method, number)
@@ -51,6 +75,7 @@ class AbstractSolution
     ms = ((end_time - start_time) * 1000).round(3)
 
     puts "Part #{number}: #{result.to_s.magenta.bold} in #{ms} ms"
+    return result
   end
 
   def test(input, answer, method, number)
