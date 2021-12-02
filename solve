@@ -9,7 +9,7 @@ def main(options)
   year = options[:year] || Date.today.year
 
   if options[:generate]
-    `./get-problem.sh #{year} #{day}`
+    `./scripts/get-problem.sh #{year} #{day}`
   else
     directory = "#{year}/day#{day}"
     require "./#{year}/day#{day}/problem.rb"
