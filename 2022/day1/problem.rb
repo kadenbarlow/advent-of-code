@@ -31,8 +31,6 @@ class Solution < AbstractSolution
   def part2(input)
     elves = input.split("\n\n")
     calories = elves.map { |elf| elf.split("\n").map(&:to_i).reduce(:+) }
-    answer = 0
-    3.times { answer += calories.delete(calories.max) }
-    return answer
+    return calories.sort[-3..].reduce(:+)
   end
 end
