@@ -5,7 +5,7 @@ require 'date'
 require './abstract_solution.rb'
 
 def main(options)
-  day = options[:day] || Date.today.day + 1
+  day = options[:day] || Date.today.day
   year = options[:year] || Date.today.year
 
   if options[:generate]

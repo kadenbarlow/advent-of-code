@@ -55,9 +55,9 @@ class AbstractSolution
       https = Net::HTTP.new(url.host, url.port)
       https.use_ssl = true
       request = Net::HTTP::Post.new(url)
-      request["Cookie"] = "session=#{ENV['SESSION_COOKIE']};"
-      form_data = [['level', (answer == part1 ? '1' : '2')],['answer', answer.to_s]]
-      request.set_form form_data, 'multipart/form-data'
+      request['Content-Type'] = "application/x-www-form-urlencoded"
+      request['Cookie'] = "session=#{ENV['SESSION_COOKIE']};"
+      request.body = "level=#{answer == part1 ? '1' : '2'}&answer=#{answer}"
       response = https.request(request)
 
       if response.read_body.include?("not the right answer")
