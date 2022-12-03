@@ -25,7 +25,7 @@ class Solution < AbstractSolution
   def part1(input)
     alphabet = ('a'..'z').to_a + ('A'..'Z').to_a
     input.split("\n").reduce(0) do |sum, items|
-      item = items[0..(items.length / 2) - 1].chars & items[items.length / 2..].chars
+      item = items[0...(items.length / 2)].chars & items[items.length / 2..].chars
       sum + alphabet.index(item[0]) + 1
     end
   end
