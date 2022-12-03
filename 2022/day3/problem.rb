@@ -33,7 +33,7 @@ class Solution < AbstractSolution
   def part2(input)
     alphabet = ('a'..'z').to_a + ('A'..'Z').to_a
     input.split("\n").each_slice(6).reduce(0) do |sum, items|
-      result = items.map(&:chars).each_slice(3).to_a.map { _1.inject(:&) }
+      result = items.map(&:chars).each_slice(3).to_a.map { _1.reduce(:&) }
       sum + alphabet.index(result[0][0]) + alphabet.index(result[1][0]) + 2
     end
   end
