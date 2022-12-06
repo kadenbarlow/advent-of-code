@@ -13,14 +13,10 @@ class Solution < AbstractSolution
   end
 
   def part1(input)
-    input.chars.length.times do |x|
-      return x + 4 if input[x..(x + 3)].chars.uniq.count == 4
-    end
+    input.length.times { |x| return x + 4 if input[x..(x + 3)].chars.uniq.count == 4 }
   end
 
   def part2(input)
-    input.chars.length.times do |x|
-      return x + 14 if input[x..(x + 13)].chars.uniq.count == 14
-    end
+    input.length.times { |x| return x + 14 if input[x..(x + 13)].chars.uniq.count == 14 }
   end
 end
