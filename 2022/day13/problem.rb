@@ -35,28 +35,20 @@ class Solution < AbstractSolution
   def compare(left, right)
     if left.is_a?(Array) && right.is_a?(Array)
       left.each_index do |index|
-        # puts "Looking at #{left[index]} vs #{right[index]}"
         return false if right[index].nil?
-
         result = compare(left[index], right[index])
-
         next if result.nil?
-
         return result
       end
       return true if left.length < right.length
-
       return nil
     elsif left.is_a?(Integer) && right.is_a?(Integer)
-      # puts "Comparing #{left} to #{right}"
       return true if left < right
       return nil if left == right
       return false if left > right
     elsif left.is_a?(Integer) && right.is_a?(Array)
-      # puts "Converting left"
       return compare([left], right)
     elsif left.is_a?(Array) && right.is_a?(Integer)
-      # puts "Converting right"
       return compare(left, [right])
     end
   end
