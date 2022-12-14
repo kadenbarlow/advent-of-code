@@ -15,8 +15,9 @@ def part1
   return valid_passports
 end
 
-def valid_height height
+def valid_height(height)
   return false unless (height =~ /\d*(cm|in)/)&.zero?
+
   value = height[/\d*/].to_i
   metric = height[/(cm|in)/]
   if metric == 'in'
@@ -24,6 +25,7 @@ def valid_height height
   elsif metric == 'cm'
     return value >= 150 && value <= 193
   end
+
   return false
 end
 
@@ -51,7 +53,7 @@ def part2
       attribute_map[key] = value
     end
 
-    valid_passports += 1if required_fields.keys.all? { |field| required_fields[field].call(attribute_map[field]) }
+    valid_passports += 1 if required_fields.keys.all? { |field| required_fields[field].call(attribute_map[field]) }
   end
   return valid_passports
 end
