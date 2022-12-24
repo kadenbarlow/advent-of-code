@@ -23,7 +23,7 @@ class CircularArray < Array
       return super(index) if index.size == Float::INFINITY
 
       if index.first > index.last # Range goes backwards?
-        if (index.first % size > index.last % size)
+        if index.first % size > index.last % size
           # we don't need to combine two subarrays for these cases where we return the
           # reverse array # e.g array[-1..-3] or array[8..2] because there is no wrapping
           # where array = (0..10).to_a, normal arrays don't support this
@@ -31,7 +31,7 @@ class CircularArray < Array
         end
 
         # otherwise we are wrapping backwards around 0
-        return wrap_forwards(((index.last%size)..(index.first%size))).reverse
+        return wrap_forwards(((index.last % size)..(index.first % size))).reverse
       elsif !in_bounds?(index.first) || !in_bounds?(index.last)
         if ((index.first < 0 && index.last < 0) || (index.first >= size && index.last >= size)) &&
            ((index.first % size) < (index.last % size))
