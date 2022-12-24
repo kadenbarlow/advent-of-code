@@ -14,6 +14,11 @@ class CircularArray < Array
     super(circular_index, *obj)
   end
 
+  def delete_at(index)
+    return nil if size.zero?
+    super(index % size)
+  end
+
   def [](index)
     return nil if empty?
 
