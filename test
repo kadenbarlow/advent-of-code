@@ -1,0 +1,4 @@
+#! /usr/bin/env ruby
+
+require 'minitest/autorun'
+Dir['./lib/tests/**/*.rb'].each { |file| require file }
