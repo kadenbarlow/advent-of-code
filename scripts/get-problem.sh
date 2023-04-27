@@ -1,8 +1,8 @@
 #! /usr/bin/env bash
 
 if [[ -z "$1" ]] || [[ -z "$2" ]]; then
-  echo "usage: ./get-problem.sh <year> <day>"
-  echo "e.g. ./get-problem.sh 2020 7"
+  echo "usage: ./get-problem.sh <year> <day> <language?>"
+  echo "e.g. ./get-problem.sh 2020 7 typescript"
   exit 1
 fi
 
@@ -28,9 +28,10 @@ if [[ ! -f $input_file ]]; then
     --compressed > $input_file
 fi
 
-problem_file="$directory/problem.rb"
-if [[ ! -f $problem_file ]]; then
-  cat > $problem_file <<-EOF
+if [[ -z "$3" ]]; then
+  problem_file="$directory/problem.rb"
+  if [[ ! -f $problem_file ]]; then
+    cat > $problem_file <<-EOF
 require 'byebug'
 class Solution < AbstractSolution
   def initialize
@@ -50,4 +51,30 @@ class Solution < AbstractSolution
   end
 end
 EOF
+  fi
+elif [[ "$3" == "typescript" ]]; then
+  problem_file="$directory/problem.ts"
+  if [[ ! -f $problem_file ]]; then
+    cat > $problem_file <<-EOF
+import { solve, TestCase, ProblemInput } from '../../lib/typescript'
+
+const part1TestCases: TestCase[] = [
+  {
+    input: '',
+    answer: ,
+  },
+]
+function part1Solution({ input }: ProblemInput): number {
+  return 0
+}
+
+const part2TestCases: TestCase[] = [
+]
+function part2Solution({ input }: ProblemInput): number {
+  return 0
+}
+
+solve({ input: \`\${__dirname}/input.txt\`, part1TestCases, part1Solution, part2TestCases, part2Solution })
+EOF
+  fi
 fi
