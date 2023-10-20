@@ -35,13 +35,16 @@ if [[ -z "$3" ]]; then
 require 'byebug'
 class Solution < AbstractSolution
   def initialize
-    @part1_test_input = <<~TXT
-    TXT
-    @part1_test_answer = nil
+    super
+    @part1_test_cases = [
+      {
+        answer: nil,
+        input: <<~TXT
+        TXT
+      }
+    ]
 
-    @part2_test_input = <<~TXT
-    TXT
-    @part2_test_answer = nil
+    @part2_test_cases = []
   end
 
   def part1(input)
