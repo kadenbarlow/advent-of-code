@@ -12,7 +12,7 @@ def main(options)
     `./scripts/get-problem.sh #{year} #{day} #{options[:typescript] ? 'typescript' : ''}`
   elsif options[:typescript]
     directory = "#{year}/day#{day}"
-    system("yarn ts-node #{directory}/problem.ts")
+    system("yarn tsx #{directory}/problem.ts")
   else
     directory = "#{year}/day#{day}"
     require "./#{year}/day#{day}/problem.rb"
