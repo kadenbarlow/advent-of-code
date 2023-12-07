@@ -49,6 +49,6 @@ class Solution < AbstractSolution
       count = count_winners(line)
       cards[index].times { count.times { cards[_1 + index + 1] += 1 } }
     end
-    cards.each_key.reduce(0) { |sum, card| sum + cards[card] }
+    cards.values.reduce(0) { |sum, value| sum + value }
   end
 end
