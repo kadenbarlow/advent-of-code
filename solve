@@ -9,10 +9,10 @@ def main(options)
   year = options[:year] || Date.today.year
 
   if options[:generate]
-    `./scripts/get-problem.sh #{year} #{day} #{options[:typescript] ? 'typescript' : ''}`
-  elsif options[:typescript]
+    `./scripts/get-problem.sh #{year} #{day} #{options[:javascript] ? 'javascript' : ''}`
+  elsif options[:javascript]
     directory = "#{year}/day#{day}"
-    system("yarn tsx #{directory}/problem.ts")
+    system("node #{directory}/problem.ts")
   else
     directory = "#{year}/day#{day}"
     require "./#{year}/day#{day}/problem.rb"
@@ -28,7 +28,7 @@ OptionParser.new do |opts|
   opts.on('-yYEAR', '--year YEAR', 'Year (Defaults to Current Year)') { |y| options[:year] = y }
   opts.on('-g', '--get-problem', 'Download Problem and Set Up Directory') { options[:generate] = true }
   opts.on('-s', '--skip', 'Skip Test Cases') { options[:skip] = true }
-  opts.on('-t', '--typescript', 'Solve solution in typescript') { options[:typescript] = true }
+  opts.on('-j', '--javascript', 'Solve solution in javascript') { options[:javascript] = true }
 end.parse!
 
 main(options)
