@@ -56,28 +56,38 @@ end
 EOF
   fi
 elif [[ "$3" == "typescript" ]]; then
-  problem_file="$directory/problem.ts"
+  problem_file="$directory/problem1.ts"
   if [[ ! -f $problem_file ]]; then
     cat > $problem_file <<-EOF
-import { solve, TestCase, ProblemInput } from '../../lib/typescript'
+import pipe from "#lib/pipe.js"
+import submit from "#lib/submit.js"
 
-const part1TestCases: TestCase[] = [
+const testCases = [
   {
-    input: '',
-    answer: ,
+    answer: 0,
+    input: "",
   },
 ]
-function part1Solution({ input }: ProblemInput): number {
-  return 0
+
+function parseInput(args) {
+  const { input } = args
+  return { ...args, data: null }
 }
 
-const part2TestCases: TestCase[] = [
-]
-function part2Solution({ input }: ProblemInput): number {
-  return 0
+function solve(args) {
+  const {} = args
 }
 
-solve({ input: \`\${__dirname}/input.txt\`, part1TestCases, part1Solution, part2TestCases, part2Solution })
+async function solution(args) {
+  return await pipe(parseInput, solve)(args)
+}
+
+submit({
+  inputFile: import.meta.url,
+  solution,
+  testCases,
+})
 EOF
+    cp $directory/problem1.ts $directory/problem2.ts
   fi
 fi

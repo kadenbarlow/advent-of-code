@@ -5,18 +5,17 @@
   "repository": "git@github.com:kadenbarlow/advent-of-code.git",
   "author": "Kaden Barlow <kadenbarlow@gmail.com>",
   "private": true,
+  "type": "module",
   "devDependencies": {
-    "@types/node": "^18.16.1",
-    "@typescript-eslint/eslint-plugin": "^5.59.1",
-    "@typescript-eslint/parser": "^5.59.1",
-    "chalk": "^4.1.0",
-    "eslint": "^8.39.0",
-    "lodash": "^4.17.21",
-    "prettier": "^2.8.8",
-    "tsx": "^3.14.0",
-    "typescript": "^5.0.4"
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "chalk": "^5.3.0",
+    "eslint": "^9.10.0",
+    "eslint-plugin-perfectionist": "^3.6.0",
+    "eslint-plugin-sort-destructure-keys": "^2.0.0",
+    "prettier": "^3.3.3"
   },
-  "dependencies": {
-    "@types/lodash": "^4.14.194"
+  "imports": {
+    "#lib": "./lib/javascript",
+    "#lib/*": "./lib/javascript/*"
   }
 }
