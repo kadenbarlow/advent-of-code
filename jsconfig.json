@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
+    "moduleResolution": "nodenext",
     "paths": {
       "#lib": ["./lib/javascript"],
       "#lib/*": ["./lib/javascript/*"]
     }
-  }
+  },
+  "exclude": ["node_modules"]
 }

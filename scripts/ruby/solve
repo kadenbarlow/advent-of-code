@@ -2,7 +2,7 @@
 
 require 'optparse'
 require 'date'
-require './lib/abstract_solution.rb'
+require './lib/ruby/abstract_solution.rb'
 
 def main(options)
   day = options[:day] || Date.today.day
