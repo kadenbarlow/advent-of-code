@@ -2,17 +2,14 @@
 
 require 'optparse'
 require 'date'
-require './abstract_solution.rb'
+require './lib/abstract_solution.rb'
 
 def main(options)
   day = options[:day] || Date.today.day
   year = options[:year] || Date.today.year
 
   if options[:generate]
-    `./scripts/get-problem.sh #{year} #{day} #{options[:javascript] ? 'javascript' : ''}`
-  elsif options[:javascript]
-    directory = "#{year}/day#{day}"
-    system("node #{directory}/problem.ts")
+    `./scripts/get-problem.sh #{year} #{day}`
   else
     directory = "#{year}/day#{day}"
     require "./#{year}/day#{day}/problem.rb"
@@ -28,7 +25,6 @@ OptionParser.new do |opts|
   opts.on('-yYEAR', '--year YEAR', 'Year (Defaults to Current Year)') { |y| options[:year] = y }
   opts.on('-g', '--get-problem', 'Download Problem and Set Up Directory') { options[:generate] = true }
   opts.on('-s', '--skip', 'Skip Test Cases') { options[:skip] = true }
-  opts.on('-j', '--javascript', 'Solve solution in javascript') { options[:javascript] = true }
 end.parse!
 
 main(options)

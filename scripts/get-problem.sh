@@ -2,7 +2,7 @@
 
 if [[ -z "$1" ]] || [[ -z "$2" ]]; then
   echo "usage: ./get-problem.sh <year> <day> <language?>"
-  echo "e.g. ./get-problem.sh 2020 7 typescript"
+  echo "e.g. ./get-problem.sh 2020 7 javascript"
   exit 1
 fi
 
@@ -25,13 +25,13 @@ if [[ ! -f $input_file ]]; then
     -H 'referer: https://adventofcode.com/2020/day/10' \
     -H 'accept-language: en-US,en;q=0.9,es-US;q=0.8,es;q=0.7' \
     -H "cookie: _ga=GA1.2.1966960010.1606971231; session=$SESSION_COOKIE; _gid=GA1.2.121064554.1607096655; _gat=1" \
-    --compressed > $input_file
+    --compressed >$input_file
 fi
 
 if [[ -z "$3" ]]; then
   problem_file="$directory/problem.rb"
   if [[ ! -f $problem_file ]]; then
-    cat > $problem_file <<-EOF
+    cat >$problem_file <<-EOF
 require 'byebug'
 class Solution < AbstractSolution
   def initialize
@@ -55,10 +55,10 @@ class Solution < AbstractSolution
 end
 EOF
   fi
-elif [[ "$3" == "typescript" ]]; then
-  problem_file="$directory/problem1.ts"
+elif [[ "$3" == "javascript" ]]; then
+  problem_file="$directory/problem1.js"
   if [[ ! -f $problem_file ]]; then
-    cat > $problem_file <<-EOF
+    cat >$problem_file <<-EOF
 import pipe from "#lib/pipe.js"
 import submit from "#lib/submit.js"
 
@@ -71,23 +71,28 @@ const testCases = [
 
 function parseInput(args) {
   const { input } = args
-  return { ...args, data: null }
+  return {
+    ...args,
+    data: input
+      .split("\n")
+      .map((line) => line.match(/exp/g))
+      .filter(Boolean),
+  }
 }
 
 function solve(args) {
-  const {} = args
-}
-
-async function solution(args) {
-  return await pipe(parseInput, solve)(args)
+  const { data } = args
 }
 
 submit({
+  day: $2,
   inputFile: import.meta.url,
-  solution,
+  part: 1,
+  solution: (args) => pipe(parseInput, solve)(args),
   testCases,
+  year: $1,
 })
 EOF
-    cp $directory/problem1.ts $directory/problem2.ts
+    # cp $directory/problem1.js $directory/problem2.js
   fi
 fi
