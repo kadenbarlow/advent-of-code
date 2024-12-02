@@ -1,4 +1,4 @@
-import tally from "#lib/object/tally.js"
+import tallyArray from "#lib/arrays/tally-array.js"
 import pipe from "#lib/pipe.js"
 import submit from "#lib/submit.js"
 
@@ -36,8 +36,8 @@ function parseInput(args) {
 
 function solve(args) {
   const { data } = args
-  const left = tally(data[0])
-  const right = tally(data[1])
+  const left = tallyArray(data[0])
+  const right = tallyArray(data[1])
 
   return Object.keys(left).reduce((acc, key) => acc + parseInt(key) * left[key] * right[key], 0)
 }
