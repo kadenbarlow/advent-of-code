@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
+    "module": "nodenext",
     "moduleResolution": "nodenext",
     "paths": {
       "#lib": ["./lib/javascript"],

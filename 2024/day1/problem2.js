@@ -1,6 +1,6 @@
+import tally from "#lib/object/tally.js"
 import pipe from "#lib/pipe.js"
 import submit from "#lib/submit.js"
-import tally from "#lib/tally.js"
 
 const testCases = [
   {
