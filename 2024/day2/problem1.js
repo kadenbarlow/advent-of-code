@@ -1,3 +1,4 @@
+import countArray from "#lib/arrays/count-array.js"
 import pipe from "#lib/pipe.js"
 import submit from "#lib/submit.js"
 
@@ -25,25 +26,22 @@ function parseInput(args) {
   }
 }
 
-function checkLevels(row, comparison) {
-  return row.every((n, index) => {
-    if (index === row.length - 1) return true
-    const a = parseInt(n)
-    const b = parseInt(row[index + 1])
+function isSafe(row) {
+  const differences = []
 
-    return comparison(a - b)
-  })
+  for (let i = 1; i < row.length; i++) {
+    differences.push(row[i] - row[i - 1])
+  }
+
+  const increasing = differences.every((d) => d >= 1 && d <= 3)
+  const decreasing = differences.every((d) => d <= -1 && d >= -3)
+
+  return increasing || decreasing
 }
 
 function solve(args) {
   const { data } = args
-
-  return data.reduce((acc, row) => {
-    if (checkLevels(row, (n) => n > 0 && n <= 3)) acc++
-    else if (checkLevels(row, (n) => n < 0 && n >= -3)) acc++
-
-    return acc
-  }, 0)
+  return countArray(data, isSafe)
 }
 
 submit({
