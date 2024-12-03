@@ -75,8 +75,7 @@ function parseInput(args) {
     ...args,
     data: input
       .split("\n")
-      .map((line) => line.match(/exp/g))
-      .filter(Boolean),
+      .map((line) => [...line.matchAll(/exp/g)]),
   }
 }
 
