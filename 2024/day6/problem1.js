@@ -2,6 +2,8 @@ import getIndexFromArray from "#lib/arrays/get-index-from-array.js"
 import pipe from "#lib/pipe.js"
 import submit from "#lib/submit.js"
 
+const DIRECTIONS = ["^", ">", "v", "<"]
+
 const testCases = [
   {
     answer: 41,
@@ -33,8 +35,6 @@ function nextPoint(data, point) {
   if (data[r][c] === "v") return [r + 1, c]
   if (data[r][c] === "<") return [r, c - 1]
 }
-
-const DIRECTIONS = ["^", ">", "v", "<"]
 
 function path(data, point) {
   while (true) {
