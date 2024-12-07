@@ -57,13 +57,6 @@ function path(data, point) {
   }
 }
 
-function adjacentToPath(data, point) {
-  const [r, c] = point
-  const adj =
-    data[r - 1]?.[c] === "X" || data[r + 1]?.[c] === "X" || data[r]?.[c - 1] === "X" || data[r]?.[c + 1] === "X"
-  return adj
-}
-
 function solve(args) {
   const { data } = args
   const start = data.flatMap((row, r) => row.flatMap((col, c) => col === "^" && [r, c])).filter(Boolean)
@@ -77,7 +70,7 @@ function solve(args) {
       row.reduce((acc, _col, c2) => {
         if (r1 === r2 && c1 === c2) return acc
         else if (data[r2][c2] === "#") return acc
-        else if (!adjacentToPath(originalPath, [r2, c2])) return acc
+        else if (originalPath[r2][c2] !== "X" && !DIRECTIONS.includes(originalPath[r2][c2])) return acc
 
         const map = [...data.map((row) => [...row])]
         map[r2][c2] = "#"
@@ -89,6 +82,7 @@ function solve(args) {
 
 submit({
   day: 6,
+  dryRun: true,
   inputFile: import.meta.url,
   part: 2,
   solution: (args) => pipe(parseInput, solve)(args),
